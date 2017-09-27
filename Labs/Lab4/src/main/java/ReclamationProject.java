@@ -11,40 +11,43 @@
 public class ReclamationProject {
 
     /**
-     * @param a2 string 1
-     * @param b2 string 2
-     * @return string 3
+     * @param args main
      */
-    static String doit(final String a2, final String b2) {
-        String a, b;
-        if (a2.length() > b2.length()) {
-            String c = a2; // TODO set c to a
-            a = b2;
-            b = c;
-        } else {
-            a = a2;
-            b = b2;
+    public static void main(final String[] args) {
+        System.out.println(doit("Horero", "Wdored"));
+    }
+
+    /**
+     * @param input1 string 1
+     * @param input2 string 2
+     * @return The longest matching substring between input1 and input2
+     */
+    static String doit(final String input1, final String input2) {
+        String result = "";
+        String filteredInput1 = input1;
+        String filteredInput2 = input2;
+        if (input1.length() < input1.length()) {
+            String temp = input1;
+            filteredInput1 = input2;
+            filteredInput2 = temp;
         }
 
-        String r = "";
 
-        // String r = (a.equals(b)) ? "" : ""; //I love the ternary operator!
         /*
          * For loop with i
          */
-        for (int i = 0; i < a.length(); i++) {
-            for (int j = a.length() - i; j > 0; j--) {
-                for (int k = 0; k < b.length() - j; k++) {
-                    if (a.regionMatches(i, b, k, j) && j > r.length()) {
-                        r = a.substring(i, i + j);
+        for (int i = 0; i < filteredInput1.length(); i++) {
+            for (int j = filteredInput1.length() - i; j > 0; j--) {
+                for (int k = 0; k < filteredInput2.length() - j; k++) {
+                    if (filteredInput1.regionMatches(i, filteredInput2, k, j)
+                            && j > result.length()) {
+                        result = filteredInput1.substring(i, i + j);
                     }
-                    // r = (a.regionMatches(i, b, k, j) && j > r.length()) ? a.substring(i, i + j) :
-                    // r;/
                     // Do it!
 
                 }
             } // Ah yeah
         }
-        return r;
+        return result;
     }
 }
