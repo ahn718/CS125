@@ -1,0 +1,14 @@
+package tutorials;
+
+public class HelloWorld {
+<<<<<<< .mine
+//asd
+}
+||||||| .r1632
+=======
+	
+	public static void main(String[] args) {
+		System.out.println("Hello World");
+	}
+	
+}>>>>>>> .r1640
