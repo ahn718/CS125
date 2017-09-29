@@ -12,7 +12,7 @@ public class OddArray {
 			oddArray1[i] = i * 2 + 1;
 		} // fills array with first 10 odd numbers;
 
-		oddArray2 = oddArray1;
+		oddArray2 = oddArray1; // points to the same address in memory
 		oddArray1[4] = -999;
 		
 		for (int oddNum : oddArray1) { // only works for reading ENTIRE array
