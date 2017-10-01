@@ -1,5 +1,7 @@
 package lecture;
 
+import java.util.Arrays;
+
 public class OddArray {
 
 	public static void main(String[] args) {
@@ -7,6 +9,13 @@ public class OddArray {
 
 		int[] oddArray1 = new int[10];
 		int[] oddArray2;
+		String[] stringArray = new String[50];
+		
+		System.out.println("ISHAN: " + stringArray[1]);
+		
+		if(stringArray[1].length() == 0) {
+			System.out.println("ISHAN IS RIGHT");
+		}
 
 		for (int i = 0; i < oddArray1.length; i++) {
 			oddArray1[i] = i * 2 + 1;
