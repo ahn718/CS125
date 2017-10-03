@@ -44,6 +44,10 @@ public class CharDistribution {
      */
     public static double[] computeDistribution(final String corpus) {
         final int alphabetSize = 52;
+        final int aIndex = 97;
+        final int zIndex = 122;
+        final int aUpperIndex = 65;
+        final int zUpperIndex = 90;
         double[] distr = new double[alphabetSize];
         String alphabetStr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         char[] alphabet = alphabetStr.toCharArray();
