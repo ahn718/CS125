@@ -49,21 +49,38 @@ public class MorseDecoder {
          * We should check the results of getNumFrames to ensure that they are safe to cast to int.
          */
         int totalBinCount = (int) Math.ceil(inputFile.getNumFrames() / BIN_SIZE);
-        double[] returnBuffer = new double[totalBinCount];
+        double[] returnBuffer = new double[totalBinCount]; // contains sum of powers of each sample
 
         double[] sampleBuffer = new double[BIN_SIZE * inputFile.getNumChannels()];
         for (int binIndex = 0; binIndex < totalBinCount; binIndex++) {
             // Get the right number of samples from the inputFile
             // Sum all the samples together and store them in the returnBuffer
+
+            // Populate the sample buffer
+            // When .readFrames is called, the internal .wav file pointer automatically gets moved.
+            // So when it is called again, the file will be read from the next BIN_SIZE bits.
+            // The sample buffer gets iterated every time it gets called from the above for-loop
+            inputFile.readFrames(sampleBuffer, BIN_SIZE);
+
+            returnBuffer[binIndex] = 0;
+            double totalPowerOfSamples = 0;
+            for (int sampleCount = 0; sampleCount < sampleBuffer.length; sampleCount++) {
+                totalPowerOfSamples += Math.abs(sampleBuffer[sampleCount]);
+            }
+            returnBuffer[binIndex] = totalPowerOfSamples;
+            // System.out.println(totalPowerOfSamples);
         }
         return returnBuffer;
     }
 
     /** Power threshold for power or no power. You may need to modify this value. */
-    private static final double POWER_THRESHOLD = 10;
+    private static final double POWER_THRESHOLD = 6;
 
     /** Bin threshold for dots or dashes. Related to BIN_SIZE. You may need to modify this value. */
-    private static final int DASH_BIN_COUNT = 8;
+    private static final int DASH_BIN_COUNT = 9;
+
+    /** Bin threshold for spaces. Related to BIN_SIZE. */
+    private static final int SPACE_BIN_COUNT = 8;
 
     /**
      * Convert power measurements to dots, dashes, and spaces.
@@ -81,13 +98,54 @@ public class MorseDecoder {
          * There are four conditions to handle. Symbols should only be output when you see
          * transitions. You will also have to store how much power or silence you have seen.
          */
+        String dotDashString = "";
+
+        int countOfPower = 0;
+        int countOfSilence = 0;
+
+        for (int binIndex = 0; binIndex < powerMeasurements.length; binIndex++) {
+            boolean isPower = powerMeasurements[binIndex] > POWER_THRESHOLD;
+            boolean isSilence = powerMeasurements[binIndex] < POWER_THRESHOLD;
+            boolean wasPower = false;
+            boolean wasSilence = false;
+
+            if (binIndex != 0) {
+                wasPower = powerMeasurements[binIndex - 1] > POWER_THRESHOLD;
+                wasSilence = powerMeasurements[binIndex - 1] < POWER_THRESHOLD;
+            }
+
+            if (isPower && wasPower) {
+                countOfPower++;
+            } else if (isPower && wasSilence) {
+
+                countOfPower++;
+                if (countOfSilence > SPACE_BIN_COUNT) {
+                    dotDashString += " ";
+                }
+                countOfSilence = 0;
+
+            } else if (isSilence && wasSilence) {
+                countOfSilence++;
+            } else if (isSilence && wasPower) {
+
+                countOfSilence++;
+                if (countOfPower >= DASH_BIN_COUNT) {
+                    dotDashString += "-";
+                } else {
+                    dotDashString += ".";
+                }
+                countOfPower = 0;
+
+            }
+        }
 
         // if ispower and waspower
         // else if ispower and not waspower
         // else if issilence and wassilence
         // else if issilence and not wassilence
 
-        return "";
+        // System.out.println(dotDashString);
+        return dotDashString;
     }
 
     /**
