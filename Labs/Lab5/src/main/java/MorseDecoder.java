@@ -116,18 +116,15 @@ public class MorseDecoder {
 
             if (isPower && wasPower) {
                 countOfPower++;
+            } else if (isSilence && wasSilence) {
+                countOfSilence++;
             } else if (isPower && wasSilence) {
-
                 countOfPower++;
                 if (countOfSilence > SPACE_BIN_COUNT) {
                     dotDashString += " ";
                 }
                 countOfSilence = 0;
-
-            } else if (isSilence && wasSilence) {
-                countOfSilence++;
             } else if (isSilence && wasPower) {
-
                 countOfSilence++;
                 if (countOfPower >= DASH_BIN_COUNT) {
                     dotDashString += "-";
@@ -135,7 +132,6 @@ public class MorseDecoder {
                     dotDashString += ".";
                 }
                 countOfPower = 0;
-
             }
         }
 
