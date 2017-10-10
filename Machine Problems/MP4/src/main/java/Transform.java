@@ -1,7 +1,3 @@
-import java.util.Arrays;
-
-import org.apache.tools.ant.taskdefs.Cvs;
-
 /**
  * A class that runs implements several simple transformations on 2D image arrays.
  * <p>
@@ -125,8 +121,7 @@ public class Transform {
                         resultImage[row][column] = originalImage[row][column - amountRight];
                     } else if (amountRight > 0) {
                         resultImage[row][rowLength - 1 - column] = originalImage[row][rowLength - 1
-                                - amountRight
-                                - column];
+                                - amountRight - column];
                     }
 
                 }
@@ -192,29 +187,22 @@ public class Transform {
      * @param rotateRight true if rotating right
      * @return image array
      */
-    public static int[][] rotate(final int[][] originalImage, final boolean rotateRight) {
-        int[][] resultImage;
+    private static int[][] rotate(final int[][] originalImage, final boolean rotateRight) {
+        // creates the right sized array
+        int[][] resultImage = new int[originalImage[0].length][originalImage.length];
 
-        // Creates the right sized array
-        if(originalImage.length > originalImage[0].length) {
-            resultImage = new int[originalImage[0].length][originalImage.length];
-        } else {
-            resultImage = new int[originalImage.length][originalImage[0].length];
-        }
+        int columnLength = originalImage.length;
+        for (int row = 0; row < columnLength; row++) {
+            int rowLength = originalImage[row].length;
 
-        int direction;
-        if (rotateRight) {
-            direction = 1;
-        } else {
-            direction = -1;
-        }
-
-        for(int row = 0; row < originalImage.length; row++) {
-            for(int column = 0; column < originalImage[row].length; column++) {
-                resultImage[column][row] = originalImage[row][column];
+            for (int column = 0; column < rowLength; column++) {
+                if (rotateRight) {
+                    resultImage[column][row] = originalImage[columnLength - 1 - row][column];
+                } else {
+                    resultImage[column][row] = originalImage[row][rowLength - 1 - column];
+                }
             }
         }
-
 
         return resultImage;
     }

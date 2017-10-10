@@ -42,7 +42,6 @@ public class TransformTest {
             int[][] copyOfInput = input.inputArray.clone();
             int[][] expectedOutput = precomputedInput.getValue();
             int[][] actualOutput = null;
-           // System.out.println("COPY OF INPUT: " + Arrays.deepToString(copyOfInput));
 
             if (input.shiftLeft > 0) {
                 actualOutput = Transform.shiftLeft(input.inputArray, input.shiftLeft);
