@@ -508,6 +508,7 @@ public class Transform {
      * @return the image transformed in wooly and frightening ways
      */
     public static int[][] mystery(final int[][] originalImage) {
-        return null;
+        return moreRed(shiftLeft(originalImage, DEFAULT_POSITION_SHIFT), DEFAULT_COLOR_SHIFT);
+
     }
 }
