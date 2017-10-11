@@ -2,7 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 /**
  * Implement front compression.
@@ -45,7 +48,27 @@ public class FrontCompression {
          * Complete this function.
          */
 
-        return "";
+        Scanner sc = new Scanner(corpus);
+        ArrayList<String> words = new ArrayList<>();
+        while (sc.hasNextLine()) {
+            words.add(sc.nextLine());
+        }
+        sc.close();
+
+        String resultString = "";
+        String currentWord = " ";
+        String previousWord = " ";
+
+        for (int i = 0; i < words.size(); i++) {
+            currentWord = words.get(i);
+            int matchingLength = longestPrefix(currentWord, previousWord);
+            String differentSub = currentWord.substring(matchingLength, currentWord.length());
+
+            resultString += Integer.toString(matchingLength) + " " + differentSub + '\n';
+
+            previousWord = currentWord;
+        }
+        return resultString;
     }
 
     /**
@@ -67,8 +90,35 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
+        Scanner sc = new Scanner(corpus);
+        ArrayList<String> compressedWords = new ArrayList<>();
+        while (sc.hasNextLine()) {
+            compressedWords.add(sc.nextLine());
+        }
+        sc.close();
 
-        return "";
+        String resultString = "";
+        String currentWord = " ";
+        String previousWord = "";
+
+        Scanner firstLineScanner = new Scanner(compressedWords.get(0));
+        firstLineScanner.nextInt();
+        previousWord = firstLineScanner.next() + '\n';
+        resultString += previousWord;
+        firstLineScanner.close();
+
+        for (int i = 1; i < compressedWords.size(); i++) {
+            currentWord = compressedWords.get(i);
+
+            Scanner lineScanner = new Scanner(currentWord);
+            int prefixLength = lineScanner.nextInt();
+            previousWord = previousWord.substring(0, prefixLength) + lineScanner.next() + '\n';
+            resultString += previousWord;
+
+            lineScanner.close();
+        }
+
+        return resultString;
     }
 
     /**
@@ -82,7 +132,15 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
-        return 0;
+        int length = 0;
+        for (int i = 0; i < firstString.length() && i < secondString.length(); i++) {
+            if (firstString.charAt(i) == secondString.charAt(i)) {
+                length++;
+            } else {
+                break;
+            }
+        }
+        return length;
     }
 
     /**
