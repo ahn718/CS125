@@ -5,8 +5,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
-
 /**
  * Implement front compression.
  * <p>
