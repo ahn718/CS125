@@ -168,7 +168,7 @@ public class Transform {
      * @return the rotated image
      */
     public static int[][] rotateLeft(final int[][] originalImage) {
-        return rotate(originalImage, true); // backwards because why not
+        return rotate(originalImage, true); //backwards because why not
     }
 
     /*
@@ -492,6 +492,19 @@ public class Transform {
     }
 
     /*
+     * Expand in the vertical axis around the image center.
+     */
+    /**
+     *
+     * @param originalImage original image
+     * @param amount amount to expand
+     * @return image array
+     */
+    public static int[][] expandVertical(final int[][] originalImage, final int amount) {
+        return originalImage;
+    }
+
+    /*
      * Shrink in the horizontal axis around the image center.
      */
     /**
@@ -505,19 +518,6 @@ public class Transform {
     }
 
     /*
-     * Expand in the vertical axis around the image center.
-     */
-    /**
-     *
-     * @param originalImage original image
-     * @param amount amount to expand
-     * @return image array
-     */
-    public static int[][] expandVertical(final int[][] originalImage, final int amount) {
-        return expand(originalImage, amount, true);
-    }
-
-    /*
      * Expand in the horizontal axis around the image center.
      */
     /**
@@ -527,32 +527,7 @@ public class Transform {
      * @return image array
      */
     public static int[][] expandHorizontal(final int[][] originalImage, final int amount) {
-        return expand(originalImage, amount, false);
-    }
-
-    /**
-     *
-     * @param oI original image
-     * @param amount factor to be expanded
-     * @param isVertical vertical expansion or not
-     * @return expanded image
-     */
-    private static int[][] expand(final int[][] oI, final int amount, final boolean isVertical) {
-        int[][] resultImage = clone2D(oI);
-
-        for (int row = 0; row < oI.length; row++) {
-            for (int col = 0; col < oI[row].length; col++) {
-                for (int dupPix = 1; dupPix < amount; dupPix++) {
-                    if (isVertical) {
-                        resultImage[row][col] = oI[row][col / dupPix];
-                    } else {
-                        resultImage[row + dupPix][col] = oI[row][col / dupPix];
-                    }
-                }
-            }
-        }
-
-        return resultImage;
+        return originalImage;
     }
 
     /**
@@ -569,35 +544,7 @@ public class Transform {
      * @return the image with the green screen removed
      */
     public static int[][] greenScreen(final int[][] originalImage) {
-        int[][] resultImage = clone2D(originalImage);
-
-        final int redShift = 0;
-        final int greenShift = 8;
-        final int blueShift = 16;
-        final int bitwiseAnd = 0xff;
-
-        final double bias = 1.125;
-
-        int columnLength = originalImage.length;
-        for (int row = 0; row < columnLength; row++) {
-            int rowLength = originalImage[row].length;
-
-            for (int column = 0; column < rowLength; column++) {
-                int fullColor = originalImage[row][column];
-
-                // pull component
-                double redComp = (fullColor >> redShift) & bitwiseAnd;
-                double greenComp = (fullColor >> greenShift) & bitwiseAnd;
-                double blueComp = (fullColor >> blueShift) & bitwiseAnd;
-
-                // checks if pixel is primarily green
-                if ((redComp + blueComp) * bias < greenComp) {
-                    int newFullColor = FILL_VALUE;
-                    resultImage[row][column] = newFullColor;
-                }
-            }
-        }
-        return resultImage;
+        return null;
     }
 
     /**

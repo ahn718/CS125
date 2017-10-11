@@ -492,6 +492,19 @@ public class Transform {
     }
 
     /*
+     * Expand in the vertical axis around the image center.
+     */
+    /**
+     *
+     * @param originalImage original image
+     * @param amount amount to expand
+     * @return image array
+     */
+    public static int[][] expandVertical(final int[][] originalImage, final int amount) {
+        return originalImage;
+    }
+
+    /*
      * Shrink in the horizontal axis around the image center.
      */
     /**
@@ -505,19 +518,6 @@ public class Transform {
     }
 
     /*
-     * Expand in the vertical axis around the image center.
-     */
-    /**
-     *
-     * @param originalImage original image
-     * @param amount amount to expand
-     * @return image array
-     */
-    public static int[][] expandVertical(final int[][] originalImage, final int amount) {
-        return expand(originalImage, amount, true);
-    }
-
-    /*
      * Expand in the horizontal axis around the image center.
      */
     /**
@@ -527,32 +527,7 @@ public class Transform {
      * @return image array
      */
     public static int[][] expandHorizontal(final int[][] originalImage, final int amount) {
-        return expand(originalImage, amount, false);
-    }
-
-    /**
-     *
-     * @param oI original image
-     * @param amount factor to be expanded
-     * @param isVertical vertical expansion or not
-     * @return expanded image
-     */
-    private static int[][] expand(final int[][] oI, final int amount, final boolean isVertical) {
-        int[][] resultImage = clone2D(oI);
-
-        for (int row = 0; row < oI.length; row++) {
-            for (int col = 0; col < oI[row].length; col++) {
-                for (int dupPix = 1; dupPix < amount; dupPix++) {
-                    if (isVertical) {
-                        resultImage[row][col] = oI[row][col / dupPix];
-                    } else {
-                        resultImage[row + dupPix][col] = oI[row][col / dupPix];
-                    }
-                }
-            }
-        }
-
-        return resultImage;
+        return originalImage;
     }
 
     /**
