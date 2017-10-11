@@ -216,7 +216,7 @@ public class Transform {
      * @return flipped image
      */
     public static int[][] flipVertical(final int[][] originalImage) {
-        return null;
+        return flip(originalImage, true);
     }
 
     /*
@@ -228,7 +228,32 @@ public class Transform {
      * @return flipped image
      */
     public static int[][] flipHorizontal(final int[][] originalImage) {
-        return null;
+        return flip(originalImage, false);
+    }
+
+    /**
+     *
+     * @param originalImage original image
+     * @param isVertical isVertical or not
+     * @return resulting image
+     */
+    private static int[][] flip(final int[][] originalImage, final boolean isVertical) {
+        int[][] resultImage = clone2D(originalImage);
+        int middleRow = originalImage.length / 2;
+        int middleColumn = originalImage[0].length / 2;
+
+        for (int row = 0; row < originalImage.length; row++) {
+
+            if (!isVertical) {
+                resultImage[row] = originalImage[originalImage.length - 1 - row].clone();
+            } else {
+                for (int col = 0; col < originalImage[row].length; col++) {
+                    resultImage[row][col] = originalImage[row][originalImage[row].length - 1 - col];
+                }
+            }
+        }
+
+        return resultImage;
     }
 
     /**
