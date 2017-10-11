@@ -239,8 +239,6 @@ public class Transform {
      */
     private static int[][] flip(final int[][] originalImage, final boolean isVertical) {
         int[][] resultImage = clone2D(originalImage);
-        int middleRow = originalImage.length / 2;
-        int middleColumn = originalImage[0].length / 2;
 
         for (int row = 0; row < originalImage.length; row++) {
 
