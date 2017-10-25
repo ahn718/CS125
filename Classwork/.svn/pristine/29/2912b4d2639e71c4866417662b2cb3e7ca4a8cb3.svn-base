@@ -11,7 +11,10 @@ public class UniverseDriver {
 		atom1.moving();
 		sim.init(100);
 		for (int i = 0; i < sim.atoms.length; i++) {
-			System.out.println("Atom #" + (i+1) + ": " + sim.atoms[i].toString());;
+			Atom tAtom = sim.atoms[i];
+			System.out.print("Atom " + (i + 1) + ": ");
+			System.out.print(tAtom.x + ", ");
+			System.out.println(tAtom.y);
 		}
 	}
 

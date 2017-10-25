@@ -19,9 +19,8 @@ public class Atom {
 		return this.vx != 0 || this.vy != 0;
 	}
 	
-	public String toString() { //overloads java.lang.Object toString() method
-		return "x = " + this.x + " y = " + this.y;
-		
+	public String toString() {
+		return "x = " + this.x;
 	}
 
 }
