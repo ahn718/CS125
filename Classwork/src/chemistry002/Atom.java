@@ -18,5 +18,9 @@ public class Atom {
 	public boolean moving() {
 		return this.vx != 0 || this.vy != 0;
 	}
+	
+	public String toString() {
+		return "x = " + this.x;
+	}
 
 }

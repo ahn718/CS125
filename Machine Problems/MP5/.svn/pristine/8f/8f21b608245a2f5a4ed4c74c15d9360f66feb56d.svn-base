@@ -1,0 +1,333 @@
+import java.util.Arrays;
+
+/** Holds the board for each instance of the game. **/
+public class ConnectN extends java.lang.Object {
+
+    /**  **/
+    private static int boardID = 0;
+
+    /**  **/
+    private static int gameCount = 0;
+
+    /**  **/
+    public static final int MAX_HEIGHT = 16;
+
+    /**  **/
+    public static final int MAX_WIDTH = 16;
+
+    /**  **/
+    static final int MIN_HEIGHT = 6;
+
+    /**  **/
+    public static final int MIN_N = 4;
+
+    /** Minimum Width. **/
+    public static final int MIN_WIDTH = 6;
+
+    /** height of board. **/
+    private int height = 0;
+
+    /** width of board. **/
+    private int width = 0;
+
+    /** N value of a board. **/
+    private int boardN = 0;
+
+    /** actual board. **/
+    private Player[][] board;
+
+    /** has the game started. **/
+    private boolean started = false;
+
+    /**  **/
+    @SuppressWarnings("checkstyle:visibilitymodifier")
+    public String title;
+
+    /**
+     *
+     * @param i setWidth
+     * @param j setHeight
+     */
+    public ConnectN(final int i, final int j) {
+        this(i, j, 0);
+    }
+
+    /**
+     *
+     * @param i setWidth
+     * @param j setHeight
+     * @param k setN
+     */
+    public ConnectN(final int i, final int j, final int k) {
+        setWidth(i);
+        setHeight(j);
+        setN(k);
+
+        board = new Player[width][height];
+        boardID = gameCount;
+        gameCount++;
+    }
+
+    /**
+     *
+     * @param otherBoard board
+     */
+    public ConnectN(final ConnectN otherBoard) {
+        this(otherBoard.getWidth(), otherBoard.getHeight(), otherBoard.getN());
+    }
+
+    /**
+     *
+     */
+    public ConnectN() {
+        this(0, 0, 0);
+    }
+
+    /**
+     *
+     * @param i width
+     * @return successful set of width
+     */
+    public boolean setWidth(final int i) {
+        if (i >= MIN_WIDTH && i <= MAX_WIDTH && !started) {
+            width = i;
+            if (!setN(boardN)) {
+                boardN = 0;
+            }
+            board = new Player[width][height];
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     *
+     * @param i height
+     * @return successful set of height
+     */
+    public boolean setHeight(final int i) {
+        if (i >= MIN_HEIGHT && i <= MAX_HEIGHT && !started) {
+            height = i;
+            if (!setN(boardN)) {
+                boardN = 0;
+            }
+            board = new Player[width][height];
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     *
+     * @param i N to set
+     * @return if successful set of N
+     */
+    public boolean setN(final int i) {
+        if (i >= MIN_N && i < Math.max(width, height) && width != 0 && height != 0 && !started) {
+            boardN = i;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return N
+     */
+    public int getN() {
+        return boardN;
+    }
+
+    /**
+     *
+     * @param player chip to be placed
+     * @param setX x
+     * @param setY y
+     * @return if successful
+     */
+    public boolean setBoardAt(final Player player, final int setX, final int setY) {
+        // TODO Auto-generated method stub
+        if (setX < 0 || setX > width || setY < 0 || setY > height) {
+            return false;
+        }
+        int validY = getValidY(setX);
+        if (setY == validY) {
+            board[setX][height - setY - 1] = new Player(player);
+            started = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param player person who's turn it is
+     * @param setX drop a tile in a specific column
+     * @return is successful
+     */
+    public boolean setBoardAt(final Player player, final int setX) {
+        // TODO Auto-generated method stub
+        if (setX < 0 || setX > width) {
+            return false;
+        }
+        int tempY = getValidY(setX);
+        if (tempY < 0) {
+            return false;
+        }
+        return setBoardAt(player, setX, tempY);
+    }
+
+    /**
+     *
+     * @param setX column to check for first open slot
+     * @return valid y coordinate of first open slot
+     */
+    private int getValidY(final int setX) {
+        int validY = -1;
+        for (int y = board[0].length - 1; y >= 0; y--) {
+            if (board[setX][y] == null) {
+                validY = height - y - 1;
+                break;
+            }
+        }
+        return validY;
+    }
+
+    /**
+     *
+     * @param getX x
+     * @param getY y
+     * @return Player at position getX, getY
+     */
+    public Player getBoardAt(final int getX, final int getY) {
+        // TODO Auto-generated method stub
+        if (getX < 0 || getX > width || getY < 0 || getY > height) {
+            return null;
+        } else if (board[getX][height - getY - 1] == null) {
+            return null;
+        }
+
+        return board[getX][height - getY - 1];
+    }
+
+    /**
+     *
+     * @return current board
+     */
+    public Player[][] getBoard() {
+        // TODO Auto-generated method stub
+        if (height == 0 || width == 0) {
+            return null;
+        }
+        Player[][] tempBoard = new Player[width][height];
+        for (int i = 0; i < tempBoard.length; i++) {
+            tempBoard[i] = board[i].clone();
+        }
+        return tempBoard;
+    }
+
+    /**
+     *
+     * @return the winner
+     */
+    public Player getWinner() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     *
+     * @param w width
+     * @param h height
+     * @param n N
+     * @return board
+     */
+    public static ConnectN create(final int w, final int h, final int n) {
+        ConnectN newBoard = new ConnectN(w, h, n);
+        if (newBoard.getWidth() == 0 || newBoard.getHeight() == 0 || newBoard.getN() == 0) {
+            return null;
+        }
+        return newBoard;
+    }
+
+    /**
+     *
+     * @param nBoards number of boards
+     * @param w width
+     * @param h height
+     * @param n N
+     * @return array of boards
+     */
+    public static ConnectN[] createMany(final int nBoards, final int w, final int h, final int n) {
+        // TODO Auto-generated method stub
+
+        ConnectN[] boards = new ConnectN[nBoards];
+        for (int i = 0; i < nBoards; i++) {
+            ConnectN temp = create(w, h, n);
+            if (temp == null) {
+                return null;
+            }
+            boards[i] = temp;
+        }
+        return boards;
+    }
+
+    /**
+     *
+     * @param boards array of boards
+     * @return if they are same??
+     */
+    public static boolean compareBoards(final ConnectN... boards) {
+        for (int i = 0; i < boards.length - 1; i++) {
+            if (boards[i] == null || boards[i + 1] == null) {
+                return false;
+            }
+
+            ConnectN b1 = new ConnectN(boards[i]);
+            ConnectN b2 = new ConnectN(boards[i + 1]);
+
+            if (b1.getWidth() == b2.getWidth() && b1.getHeight() == b1.getHeight()
+                    && b1.getN() == b2.getN()) {
+                if (Arrays.deepEquals(b1.getBoard(), b2.getBoard())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return total number of games
+     */
+    public static int getTotalGames() {
+        return gameCount;
+    }
+
+    /**
+     *
+     * @return board ID
+     */
+    public int getID() {
+        return boardID;
+
+    }
+
+}

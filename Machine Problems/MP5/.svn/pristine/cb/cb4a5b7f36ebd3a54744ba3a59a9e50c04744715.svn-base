@@ -1,0 +1,289 @@
+
+/** Holds the board for each instance of the game. **/
+public class ConnectN extends java.lang.Object {
+
+    /**  **/
+    private static int boardID = 0;
+
+    /**  **/
+    private static int gameCount = 0;
+
+    /**  **/
+    public static final int MAX_HEIGHT = 16;
+
+    /**  **/
+    public static final int MAX_WIDTH = 16;
+
+    /**  **/
+    static final int MIN_HEIGHT = 6;
+
+    /**  **/
+    public static final int MIN_N = 4;
+
+    /** Minimum Width. **/
+    public static final int MIN_WIDTH = 6;
+
+    /**  **/
+    private int height;
+
+    /**  **/
+    private int width;
+
+    /**  **/
+    private int boardN;
+
+    /**  **/
+    private Player[][] board;
+
+    /**  **/
+    @SuppressWarnings("checkstyle:visibilitymodifier")
+    public String title;
+
+    /**
+     *
+     * @param i setWidth
+     * @param j setHeight
+     */
+    public ConnectN(final int i, final int j) {
+        // TODO Auto-generated constructor stub
+        this(i, j, 0);
+    }
+
+    /**
+     *
+     * @param i setWidth
+     * @param j setHeight
+     * @param k setN
+     */
+    public ConnectN(final int i, final int j, final int k) {
+        // TODO Auto-generated constructor stub
+
+        width = i;
+        height = j;
+        boardN = k;
+
+        if (i < MIN_WIDTH || i > MAX_WIDTH) {
+            width = 0;
+        }
+        if (j < MIN_HEIGHT || j > MAX_HEIGHT) {
+            height = 0;
+        }
+        if (width == 0 || height == 0 || k < MIN_N || k >= height || k >= width) {
+            boardN = 0;
+        }
+
+        board = new Player[width][height];
+        boardID = gameCount;
+        gameCount++;
+    }
+
+    /**
+     *
+     * @param otherBoard board
+     */
+    public ConnectN(final ConnectN otherBoard) {
+        // TODO Auto-generated constructor stub
+        this(otherBoard.getWidth(), otherBoard.getHeight(), otherBoard.getN());
+    }
+
+    /**
+     *
+     */
+    public ConnectN() {
+        // TODO Auto-generated constructor stub
+        this(0, 0, 0);
+    }
+
+    /**
+     *
+     * @param i width
+     * @return successful set of width
+     */
+    public boolean setWidth(final int i) {
+        // TODO Auto-generated method stub
+        if (i >= MIN_WIDTH && i <= MAX_WIDTH) {
+            width = i;
+            if (!setN(boardN)) {
+                boardN = 0;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return width
+     */
+    public int getWidth() {
+        // TODO Auto-generated method stub
+        return width;
+    }
+
+    /**
+     *
+     * @param i height
+     * @return successful set of height
+     */
+    public boolean setHeight(final int i) {
+        // TODO Auto-generated method stub
+        if (i >= MIN_HEIGHT && i <= MAX_HEIGHT) {
+            height = i;
+            if (!setN(boardN)) {
+                boardN = 0;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return height
+     */
+    public int getHeight() {
+        // TODO Auto-generated method stub
+        return height;
+    }
+
+    /**
+     *
+     * @param i N to set
+     * @return if successful set of N
+     */
+    public boolean setN(final int i) {
+        // TODO Auto-generated method stub
+        if (i >= MIN_N && i < width && i < height) {
+            boardN = i;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return N
+     */
+    public int getN() {
+        // TODO Auto-generated method stub
+        return boardN;
+    }
+
+    /**
+     *
+     * @param getX x
+     * @param getY y
+     * @return Player at pos
+     */
+    public Player getBoardAt(final int getX, final int getY) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     *
+     * @param player chip to be placed
+     * @param setX x
+     * @param setY y
+     * @return if successful
+     */
+    public boolean setBoardAt(final Player player, final int setX, final int setY) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     *
+     * @param player person who's turn it is
+     * @param i position that was played
+     * @return is successful
+     */
+    public boolean setBoardAt(final Player player, final int i) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     *
+     * @return current board
+     */
+    public Player[][] getBoard() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     *
+     * @return the winner
+     */
+    public Player getWinner() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     *
+     * @param w width
+     * @param h height
+     * @param n N
+     * @return board
+     */
+    public static ConnectN create(final int w, final int h, final int n) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     *
+     * @param nBoards number of boards
+     * @param w width
+     * @param h height
+     * @param n N
+     * @return array of boards
+     */
+    public static ConnectN[] createMany(final int nBoards, final int w, final int h, final int n) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     *
+     * @param boards array of boards
+     * @return if they are same??
+     */
+    public static boolean compareBoards(final ConnectN... boards) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     *
+     * @param board1 board1 to compare
+     * @param board2 board2 to compare
+     * @return if same??
+     */
+    public static boolean compareBoards(final ConnectN board1, final ConnectN board2) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     *
+     * @return total number of games
+     */
+    public static int getTotalGames() {
+        // TODO Auto-generated method stub
+        return gameCount;
+    }
+
+    /**
+     *
+     * @return board ID
+     */
+    public int getID() {
+        // TODO Auto-generated method stub
+        return boardID;
+
+    }
+
+}
