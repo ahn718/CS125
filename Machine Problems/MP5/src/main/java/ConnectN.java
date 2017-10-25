@@ -53,7 +53,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @param i setWidth
      * @param j setHeight
      * @param k setN
@@ -69,11 +68,11 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @param otherBoard board
      */
     public ConnectN(final ConnectN otherBoard) {
         this(otherBoard.getWidth(), otherBoard.getHeight(), otherBoard.getN());
+
     }
 
     /**
@@ -84,7 +83,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @param i width
      * @return successful set of width
      */
@@ -101,7 +99,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @return width
      */
     public int getWidth() {
@@ -109,7 +106,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @param i height
      * @return successful set of height
      */
@@ -126,7 +122,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @return height
      */
     public int getHeight() {
@@ -134,7 +129,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @param i N to set
      * @return if successful set of N
      */
@@ -147,7 +141,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @return N
      */
     public int getN() {
@@ -155,7 +148,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @param player person who's turn it is
      * @param setX drop a tile in a specific column
      * @return is successful
@@ -173,7 +165,6 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @param player chip to be placed
      * @param setX x
      * @param setY y
@@ -186,7 +177,7 @@ public class ConnectN extends java.lang.Object {
         }
         int validY = getValidY(setX);
         if (setY == validY) {
-            board[setX][height - setY - 1] = new Player(player);
+            board[setX][setY] = new Player(player);
             started = true;
             return true;
         }
@@ -194,15 +185,14 @@ public class ConnectN extends java.lang.Object {
     }
 
     /**
-     *
      * @param setX column to check for first open slot
      * @return valid y coordinate of first open slot
      */
     private int getValidY(final int setX) {
         int validY = -1;
-        for (int y = board[0].length - 1; y >= 0; y--) {
+        for (int y = 0; y < board[0].length; y++) {
             if (board[setX][y] == null) {
-                validY = height - y - 1;
+                validY = y;
                 break;
             }
         }
@@ -219,11 +209,11 @@ public class ConnectN extends java.lang.Object {
         // TODO Auto-generated method stub
         if (getX < 0 || getX > width || getY < 0 || getY > height) {
             return null;
-        } else if (board[getX][height - getY - 1] == null) {
+        } else if (board[getX][getY] == null) {
             return null;
         }
 
-        return board[getX][height - getY - 1];
+        return new Player(board[getX][getY]);
     }
 
     /**
