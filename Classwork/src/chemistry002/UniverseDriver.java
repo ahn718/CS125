@@ -16,7 +16,7 @@ public class UniverseDriver {
 	}
 
 	public static boolean smashing(Atom a1, Atom a2) {
-		return a1.x == a2.x && a1.y == a2.y;
+		return a1.x == a2.x && a1.y == a2.y;		
 	}
 
 }

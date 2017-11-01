@@ -24,6 +24,9 @@ public class ConnectN extends java.lang.Object {
     /** Minimum Width. **/
     public static final int MIN_WIDTH = 6;
 
+    /** ID of a single board.**/
+    private int thisID = 0;
+
     /** height of board. **/
     private int height = 0;
 
@@ -72,7 +75,6 @@ public class ConnectN extends java.lang.Object {
      */
     public ConnectN(final ConnectN otherBoard) {
         this(otherBoard.getWidth(), otherBoard.getHeight(), otherBoard.getN());
-
     }
 
     /**
@@ -315,7 +317,9 @@ public class ConnectN extends java.lang.Object {
      * @return board ID
      */
     public int getID() {
-        return boardID;
+        thisID = boardID;
+        boardID++;
+        return thisID;
 
     }
 
