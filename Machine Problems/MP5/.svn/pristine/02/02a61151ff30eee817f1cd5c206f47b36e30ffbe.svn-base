@@ -40,9 +40,6 @@ public class ConnectN extends java.lang.Object {
     /** has the game started. **/
     private boolean started = false;
 
-    /** Has the game ended? **/
-    private boolean ended = false;
-
     /**  **/
     @SuppressWarnings("checkstyle:visibilitymodifier")
     public String title;
@@ -157,9 +154,6 @@ public class ConnectN extends java.lang.Object {
      */
     public boolean setBoardAt(final Player player, final int setX) {
         // TODO Auto-generated method stub
-        if (ended) {
-            return false;
-        }
         if (setX < 0 || setX > width) {
             return false;
         }
@@ -183,7 +177,7 @@ public class ConnectN extends java.lang.Object {
         }
         int validY = getValidY(setX);
         if (setY == validY) {
-            board[setX][setY] = player;
+            board[setX][setY] = new Player(player);
             started = true;
             return true;
         }
@@ -244,6 +238,15 @@ public class ConnectN extends java.lang.Object {
 
     /**
      *
+     * @return the winner
+     */
+    public Player getWinner() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     *
      * @param w width
      * @param h height
      * @param n N
@@ -285,6 +288,9 @@ public class ConnectN extends java.lang.Object {
      * @return if they are same??
      */
     public static boolean compareBoards(final ConnectN... boards) {
+        // if (boards.length == 1) {
+        // return true;
+        // }
         for (int i = 0; i < boards.length - 1; i++) {
             if (boards[i] == null || boards[i + 1] == null) {
                 return false;
@@ -318,75 +324,6 @@ public class ConnectN extends java.lang.Object {
             }
         }
         return true;
-    }
-
-    /**
-     *
-     * @return the winner
-     */
-    public Player getWinner() {
-        // TODO Auto-generated method stub
-
-        int count = 0;
-
-        if (boardN == 0) {
-            return null;
-        }
-
-        // check X:
-        for (int y = 0; y < board[0].length - 1; y++) {
-            count = 0;
-            for (int x = 0; x < board.length - 1; x++) {
-                Player currentPlayer = board[x][y];
-                if (currentPlayer == null) {
-                    count = 0;
-                    x++;
-                } else {
-                    Player nextPlayerX = board[x + 1][y];
-
-                    if (currentPlayer.equals(nextPlayerX)) {
-                        count++;
-                    } else {
-                        count = 0;
-                    }
-                    if (count == boardN - 1) {
-                        currentPlayer.addScore();
-                        ended = true;
-                        return currentPlayer;
-                    }
-                }
-
-            }
-        }
-
-        // check Y:
-        for (int x = 0; x < board.length - 1; x++) {
-            count = 0;
-            for (int y = 0; y < board[x].length - 1; y++) {
-                Player currentPlayer = board[x][y];
-                if (currentPlayer == null) {
-                    count = 0;
-                    y++;
-                } else {
-
-                    Player nextPlayerY = board[x][y + 1];
-
-                    if (currentPlayer.equals(nextPlayerY)) {
-                        count++;
-                    } else {
-                        count = 0;
-                    }
-                    if (count == boardN - 1) {
-                        currentPlayer.addScore();
-                        ended = true;
-                        return currentPlayer;
-                    }
-                }
-
-            }
-        }
-
-        return null;
     }
 
     /**

@@ -300,6 +300,8 @@ public class ConnectNTest {
         Assert.assertTrue(board.setN(4));
         Assert.assertEquals(board.getN(), 4);
 
+
+
         /*
          * Make sure N is not static.
          */
